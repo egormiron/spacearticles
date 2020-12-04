@@ -1,13 +1,7 @@
 import React from 'react';
 import Header from "./Header";
 import Card from "./Card";
-
-const card = {
-  title: 'China releases a super-clear image of the Moon taken by Chang’e 5 probe',
-  summary: 'There’s also video showing the descent of the spacecraft.',
-  img: 'https://cdn.arstechnica.net/wp-content/uploads/2020/12/5386897742-JwCDRjkmU.jpg',
-  url: 'https://arstechnica.com/science/2020/12/china-releases-a-super-clear-image-of-the-moon-taken-by-change-5-probe/'
-}
+import cardsList from './cards-list'
 
 export default function App() {
   return (
@@ -15,9 +9,16 @@ export default function App() {
       <Header />
       <div className="container">
         <div className="row">
-          <div className="col-4">
-            <Card title={ card.title } summary={ card.summary } img={ card.img } url={ card.url } />
-          </div>
+          { cardsList.map(card => (
+            <div key={ card.id } className="col-4 my-3">
+              <Card
+                className="h-100"
+                title={ card.title }
+                summary={ card.summary }
+                img={ card.imageUrl }
+                url={ card.url } />
+            </div>
+          ))}
         </div>
       </div>
     </div>

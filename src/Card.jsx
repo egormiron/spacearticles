@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function Card({ title, summary, img, url }) {
+export default function Card({ className, title, summary, img, url }) {
   return (
-    <div className="card">
+    <div className={`card ${className}`}>
       <img
         loading="lazy"
         src={ img }
@@ -15,7 +15,7 @@ export default function Card({ title, summary, img, url }) {
         <p className="card-text">
           { summary }
         </p>
-        <a href={ url } className="btn btn-link ml-n2">Read More</a>
+        <a href={ url } className="btn btn-link ml-n2" target="_blank">Read More</a>
       </div>
     </div>
   )
