@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "./Header";
 import Card from "./Card";
-import cardsList from './cards-list'
 import Filter from "./Filter";
+
+const BASE_API_URL = 'https://test.spaceflightnewsapi.net/api/v2/articles'
 
 function searchFilter({ title, summary }, search) {
   search = search.toLowerCase()
@@ -22,12 +23,16 @@ function useFilter(initialFilter) {
 
 export default function App() {
   const [filter, changeFilter] = useFilter({ search: '', limit: 5 })
+  const [cardsList, updateCards] = useState([])
+  useEffect(() => {
+    fetch(`${BASE_API_URL}?_limit=${filter.limit}`)
+      .then(response => response.json())
+      .then(data => updateCards(data))
+  }, [filter.limit])
 
-  let cards = cardsList.slice(0, filter.limit);
-
-  if (filter.search.length) {
-    cards = cards.filter((card) => searchFilter(card, filter.search))
-  }
+  const cards = filter.search
+    ? cardsList.filter((card) => searchFilter(card, filter.search))
+    : cardsList
 
   return (
     <div>
@@ -43,7 +48,7 @@ export default function App() {
         </div>
         <div className="row">
           { cards.map(card => (
-            <div key={ card.id } className="col-4 my-3">
+            <div key={ card.id } className="col-lg-4 col-md-6 my-3">
               <Card
                 className="h-100"
                 title={ card.title }
